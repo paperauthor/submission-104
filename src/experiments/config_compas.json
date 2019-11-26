@@ -1,0 +1,61 @@
+{
+  "seed": 0,
+  "fairness": "demographic_parity",
+  "lambda": 1.0,
+
+  "optimization": {
+    "time_steps": 3,
+    "epochs": 40,
+    "minibatches": 64,
+    "batchsize": 64,
+    "learning_rate": 0.1,
+    "lr_frequency": 1000,
+    "lr_factor": 1.0,
+    "fix_proposed": true
+  },
+
+  "utility": {
+    "cost": 0.6,
+    "n_samples_estimate": 1000000,
+    "n_samples_estimate_single": 10000000
+  },
+
+  "policy": {
+    "initialization": "pre_trained",
+    "n_pre_training": 500
+  },
+
+  "true_distribution": {
+    "type": "compas",
+    "theta": [-0.1, 0.7],
+    "threshold": -0.3,
+    "path": "../datasets/",
+    "test_size": 0.2,
+    "add_constant": true,
+    "protected_as_feature": false
+  },
+
+  "perform": [
+    ["recent", "logistic"],
+    ["recent", "semi_logistic"],
+    ["all", "logistic"],
+    ["all", "semi_logistic"],
+    ["all", "deterministic_threshold"],
+    ["recent", "deterministic_threshold"]
+  ],
+
+  "feature_map": {
+    "type": "identity",
+    "n_fit": 10
+  },
+
+  "results": {
+    "name": null,
+    "result_dir": "../results/compas",
+    "monitored": [
+      "TPR", "FPR", "TNR", "FNR", "PPV", "NPV", "FDR", "FOR", "ACC", "ERR",
+      "SEL", "F1", "AVG_ODDS_DIFF", "AVG_ABS_ODDS_DIFF", "ERR_DIFF", "DI", "DP",
+      "EOP", "A", "N", "P"
+    ]
+  }
+}
